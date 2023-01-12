@@ -1,0 +1,1 @@
+echo Advanced storage practices
