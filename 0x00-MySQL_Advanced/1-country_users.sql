@@ -1,5 +1,4 @@
 -- create a table called users
--- with an primary auto increment primary key id
 -- having a default colum country which can be US, CO, TN
 
 CREATE TABLE IF NOT EXISTS `users`(
