@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
-"""provides some stats about Nginx logs stored in MongoDB"""
+"""provides some stats about Nginx logs stored in MongoDB
+printing out each request method in logs"""
 from pymongo import MongoClient
 
 client = MongoClient()
