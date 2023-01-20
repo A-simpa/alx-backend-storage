@@ -13,6 +13,6 @@ if __name__ == '__main__':
     for med in methods:
         criteria = {'method': med}
         print(
-            "\tmethod {}: {}".format(med, db.nginx.count_documents(criteria)))
+            "    method {}: {}".format(med, db.nginx.count_documents(criteria)))
     criteria = {'method': 'GET', 'path': '/status'}
     print("{} status check".format(db.nginx.count_documents(criteria)))
