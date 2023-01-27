@@ -18,7 +18,7 @@ def call_history(method: Callable) -> Callable:
     @wraps(method)
     def wrapper(self, args):
         self._redis.rpush(method.__qualname__ + ":inputs", str(args))
-        out = method(args)
+        out = method(args, str)
         self._redis.rpush(method.__qualname__ + ":ouputs", out)
         return (method)
     return wrapper
