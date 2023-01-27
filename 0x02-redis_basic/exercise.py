@@ -10,16 +10,16 @@ def count_calls(method: Callable) -> Callable:
     @wraps(method)
     def wrapper(self, data):
         self._redis.incr(method.__qualname__, 1)
-        return (method)
+        return method(self, data)
     return wrapper
 
 
 def call_history(method: Callable) -> Callable:
     @wraps(method)
-    def wrapper(self, *args):
-        self._redis.rpush(method.__qualname__ + ":inputs", str(args))
-        out = method(self, *args)
-        out_list = self._redis.rpush(method.__qualname__ + ":outputs", str(out))
+    def wrapper(self, data):
+        self._redis.rpush(method.__qualname__ + ":inputs", str(data))
+        out = method(self, data)
+        out_list = self._redis.rpush(method.__qualname__ + ":outputs", out)
         return out
     return wrapper
 
@@ -34,7 +34,7 @@ class Cache:
     @call_history
     def store(self, data: Union[str, bytes, int, float]) -> str:
         """store a data in a db"""
-        key = str(uuid.uuid4)
+        key = str(uuid.uuid4())
         self._redis.set(key, data)
         return key
 
