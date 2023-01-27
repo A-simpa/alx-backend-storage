@@ -17,7 +17,7 @@ class Cache:
         self._redis.set(key, data)
         return key
 
-    def get(self, key: str, fn: Optional[Callable]) -> Any:
+    def get(self, key: str, fn: Optional[Callable] = None) -> Any:
         """get a data back using a callable fn"""
         val = self._redis.get(key)
         if fn is not None:
