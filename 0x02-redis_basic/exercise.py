@@ -2,7 +2,7 @@
 """defines the Cache class"""
 import redis
 import uuid
-from typing import Union
+from typing import Union, Callable, Any
 
 
 class Cache:
@@ -16,3 +16,16 @@ class Cache:
         key = str(uuid.uuid4)
         self._redis.set(key, data)
         return key
+
+    def get(self, key: str, fn: Callable) -> Any:
+        """get a data back using a callable fn"""
+        val = self._redis.get(key)
+        return (fn(val))
+
+    def get_str(self) -> Callable:
+        """return string callable"""
+        return (str)
+
+    def get_int(self) -> Callable:
+        """return int callable"""
+        return (int)
