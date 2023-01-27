@@ -17,10 +17,12 @@ class Cache:
         self._redis.set(key, data)
         return key
 
-    def get(self, key: str, fn: Optional[Callable] = None) -> Any:
+    def get(self, key: str, fn: Optional[Callable]) -> Any:
         """get a data back using a callable fn"""
         val = self._redis.get(key)
-        return (fn(val))
+        if fn is not None:
+            return (fn(val))
+        return val
 
     def get_str(self) -> Callable:
         """return string callable"""
