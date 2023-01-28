@@ -7,6 +7,7 @@ from typing import Union, Callable, Any, Optional
 
 
 def count_calls(method: Callable) -> Callable:
+    """wrapper to count how many times a function is called"""
     @wraps(method)
     def wrapper(self, data):
         self._redis.incr(method.__qualname__, 1)
@@ -15,6 +16,7 @@ def count_calls(method: Callable) -> Callable:
 
 
 def call_history(method: Callable) -> Callable:
+    """wrapper to write to history"""
     @wraps(method)
     def wrapper(self, *data):
         self._redis.rpush(method.__qualname__ + ":inputs", str(data))
