@@ -52,3 +52,15 @@ class Cache:
     def get_int(self) -> Callable:
         """return int callable"""
         return (int)
+
+
+def replay(method: Callable) -> None:
+    """prints details of the history of callable"""
+    name = method.__qualname__
+    db = redis.Redis()
+    list_open = db.lrange("{}:inputs".format(name), 0, -1)
+    list_out = db.lrange("{}:outputs".format(name), 0, -1)
+    print("{} was called {} times:".format(name, len(list_out)))
+    for i, j in zip(list_open, list_out):
+        print("{}(*{}) -> {}".format(
+            name, i.decode('utf-8'), j.decode('utf-8')))
